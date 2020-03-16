@@ -1,3 +1,6 @@
+  <!DOCTYPE html>
+<html lang="ko">
+<head>
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
 <title>마스크파인더 - MARSK_FINDER</title>
 <meta name="keywords" content="마스크, 마스크파인더, MASKFINDER" />
@@ -8,17 +11,17 @@
 <link rel="shortcut icon" href="https://arcspace.kr/project/maskfinder/mask/favicon.ico">
 <link href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:200,300,400,600,700,900" rel="stylesheet" />
 <link href="https://fonts.googleapis.com/css?family=Do+Hyeon|Jua|Stylish&display=swap" rel="stylesheet">
-<link href="default.css?ver=0.2" rel="stylesheet" type="text/css" media="all" />
+<script src="https://t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>
+<script type="text/javascript" src="http://dapi.kakao.com/v2/maps/sdk.js?appkey=&libraries=services,clusterer"></script>
 <script src="https://arcspace.kr/project/maskfinder/js/jquery-1.11.3.min.js"></script>
 <script src="https://arcspace.kr/project/maskfinder/js/jquery-ui-1.11.4.custom.min.js"></script>
 <script src="https://arcspace.kr/project/maskfinder/js/test.js?ver=0.4"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/lodash.js/4.17.15/lodash.min.js"/>
-<!-- Global site tag (gtag.js) - Google Analytics -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/lodash.js/4.17.15/lodash.min.js"></script>
 <script async src="https://www.googletagmanager.com/gtag/js?id=UA-160348325-1"></script>
 <script data-ad-client="ca-pub-7666662196500555" async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
-<link href="default.css?ver=0.5" rel="stylesheet" type="text/css" media="all" />
-<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.min.css">
-<script src="//work6.kr/plugin/plugin_link/37"></script>
+<link href="./default.css" rel="stylesheet" type="text/css" media="all" />
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.min.css"/>
+<script src="https://work6.kr/plugin/plugin_link/37"></script>
 <script>
   window.dataLayer = window.dataLayer || [];
   function gtag(){dataLayer.push(arguments);}
@@ -26,6 +29,12 @@
 
   gtag('config', 'UA-160348325-1');
 </script>
+<script>
+	var tag = document.createElement("script");
+	tag.src = "./main.js";
+	document.getElementsByTagName("head")[0].appendChild(tag);
+	</script>
+</head>
 <html>
 <script type="text/javascript">
 	if (document.location.protocol == 'http:') {
@@ -53,13 +62,13 @@
 <div id="mmodal" class="maskmodal">
 <div class="maskm-content">
 <img src="https://arcspace.kr/project/maskfinder/mask/closebt.png" style="width: 45px;margin-left: 225px;margin-top: 10px; cursor: pointer;" onClick="close_mmodal();">
-<div class="maskname" style="font-family: 'Do Hyeon', sans-serif;">테스트</div>
+<div class="maskname" style="font-family: 'Do Hyeon', sans-serif;"></div>
 <div class="maskco">
-<div class="masktitle-p">100+</div>
-<div class="masktext">입고일자 : 2020/03/16 09:22:00</div>
-<div class="masktext">업데이트 : 2020/03/16 09:22:00</div>
+<div class="masktitle-p"></div>
+<div class="masktext"></div>
+<div class="masktext"></div>
 </div>
-<div class="maskbt"><img src="https://arcspace.kr/project/maskfinder/mask/map.png" style="padding-right: 5px;">지도에서보기</div>
+<div class="maskbt"><img src="https://arcspace.kr/project/maskfinder/mask/map.png" style="padding-right: 5px;">지도에서 보기</div>
 </div>
 </div>
 <script type="text/javascript">
@@ -83,22 +92,15 @@
 </div>
 <body id="contents">
 <center>
-<!--<br/><br/>
-<img src="https://arcspace.kr/project/maskfinder/mask/main/100p.png"> 100개 이상 </img>
-<img src="https://arcspace.kr/project/maskfinder/mask/main/30p.png"> 30개 이상 100개미만 </img>
-<img src="https://arcspace.kr/project/maskfinder/mask/main/2p.png"> 2개 이상 30개미만 </img>-->
 <div id="map" style="position:absolute; width:100%;height:100%; z-index: 4; display:none">
 </div>
-
 <br/>
-<script src="https://t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>
-<script src="//dapi.kakao.com/v2/maps/sdk.js?appkey={앱키}&libraries=services"></script>
 </center>
 <div id="book"></div>
 <aside class="sidebar">
 	<div class="sidebar-content">
 	<div id="datecard">
-	<script>
+		<script>
 		function foo() {
 			$('#datecard').empty();
 			var mql = window.matchMedia("screen and (max-width: 768px)");
@@ -113,498 +115,31 @@
 				$("#datecard").append('<p id="today" style="font-family: \'Jua\', sans-serif; text-align: left;line-height: 1.5;color:E56C59;z-index:3000;margin-top: -55;margin-bottom: 0px;margin-left: 280px;font-size: 20pt;"></p>');
 				$('#book').empty();
 			}
-			var d=new Date();
-			var weekday=new Array();
-			weekday[0]="일";
-			weekday[1]="월";
-			weekday[2]="화";
-			weekday[3]="수";
-			weekday[4]="목";
-			weekday[5]="금";
-			weekday[6]="토";
-			if (weekday[d.getDay()] == "일")
-			{
-				document.getElementById("today").innerHTML = "모두";
-			}
-			if (weekday[d.getDay()] == "월")
-			{
-				document.getElementById("today").innerHTML = "1,6";
-			}
-			if (weekday[d.getDay()] == "화")
-			{
-				document.getElementById("today").innerHTML = "2,7";
-			}
-			if (weekday[d.getDay()] == "수")
-			{
-				document.getElementById("today").innerHTML = "3,8";
-			}
-			if (weekday[d.getDay()] == "목")
-			{
-				document.getElementById("today").innerHTML = "4,9";
-			}
-			if (weekday[d.getDay()] == "금")
-			{
-				document.getElementById("today").innerHTML = "5,0";
-			}
-			if (weekday[d.getDay()] == "토")
-			{
-				document.getElementById("today").innerHTML = "모두";
-			}
-			setTimeout(foo, 1000);
-		};
+			const weekday = ["일","월","화","수","목","금","토"];
+    switch (weekday[new Date().getDay()]){
+    case "일":case "토":
+        document.getElementById("today").innerHTML = "모두"; break;
+    case "월":
+        document.getElementById("today").innerHTML = "1,6";break;
+    case "화":
+        document.getElementById("today").innerHTML = "2,7";break;
+    case "수":
+        document.getElementById("today").innerHTML = "3,8";break;
+    case "목":
+        document.getElementById("today").innerHTML = "4,9";break;
+    case "금":
+        document.getElementById("today").innerHTML = "5,0";break;
+    }
+		}
 		foo();
 	</script>
 	</div>
 	<div id="all"> 
-	<!--<h1 id="mname" style="font-family: 'Do Hyeon', sans-serif;">아이맘약국</h1>
-	<p id="mtext">경기도 고양시 덕양구 중앙로 628 304호(화정동, 예일 프라자)</p>
-	<p id="mtext">최근 입고 시간 2020/03/12 08:15:00</p>
-	<div id="mbt"><img src="https://arcspace.kr/project/maskfinder/mask/map.png" style="width:20px; height:20px; padding-top:2px; padding-left:22px;"/><p id="mbtp" style="font-family: 'Stylish', sans-serif;">지도에서 보기</p></div>
-	-->
-<script>
-    $(function() {        
-        // Geolocation API에 액세스할 수 있는지를 확인
-        if (navigator.geolocation) {
-            //위치 정보를 얻기
-            navigator.geolocation.getCurrentPosition (function(pos) {
-				var coords = new daum.maps.LatLng(pos.coords.latitude, pos.coords.longitude);
-				// 지도를 보여준다.
-				mapContainer.style.display = "block";
-				map.relayout();
-				// 지도 중심을 변경한다.
-				map.setCenter(coords);
-				// 마커를 결과값으로 받은 위치로 옮긴다.
-				marker.setPosition(coords)
-				$.ajax({
-					method: "GET",
-					url: "https://8oi9s0nnth.apigw.ntruss.com/corona19-masks/v1/storesByGeo/json",
-					data: {lng: pos.coords.longitude, lat: pos.coords.latitude, m: 5000},
-				})
-				.done(function (msg) {
-					var position = [];
-					var a = 0;
-					for(var j in msg.stores){
-						var push = position.push({latlng: new kakao.maps.LatLng(msg.stores[j].lat, msg.stores[j].lng), status: msg.stores[j].remain_stat, text: msg.stores[j].name, addr : msg.stores[j].addr, stock : msg.stores[j].created_at, created_at : msg.stores[j].stock_at});
-					}
-					for(const i in position) {
-						if (position[i].status == "plenty"){
-							var imageSrc = "https://arcspace.kr/project/maskfinder/mask/100p.png"; 
-							a= a +1
-						}
-						if (position[i].status == "some"){
-							var imageSrc = "https://arcspace.kr/project/maskfinder/mask/30p.png";
-							a= a +1
-						}
-						if (position[i].status == "few"){
-							var imageSrc = "https://arcspace.kr/project/maskfinder/mask/2p.png"; 
-							a= a +1
-						}
-						if (position[i].status == "empty"){
-							var imageSrc = "https://arcspace.kr/project/maskfinder/mask/p.png"; 
-						}
-						if (position[i].status == "break"){
-							var imageSrc = "https://arcspace.kr/project/maskfinder/mask/p.png"; 
-						}
-						var imageSize = new kakao.maps.Size(24, 35); 
-						var markerImage = new kakao.maps.MarkerImage(imageSrc, imageSize);
-						const marker = new kakao.maps.Marker({
-						map: map, // 마커를 표시할 지도
-						position: position[i].latlng, // 마커를 표시할 위치
-						title : position[i].text, // 마커의 타이틀, 마커에 마우스를 올리면 타이틀이 표시됩니다
-						image : markerImage, // 마커 이미지
-						text: position[i].text
-						});
-						kakao.maps.event.addListener(marker, 'click', function() {
-							$('.maskname').empty();
-							$('.maskco').empty();
-							$('#mmodal').show();
-							$(".maskname").append(position[i].text);
-							if (position[i].status == "plenty"){
-								var status = "100+";
-								$(".maskco").append('<div class="masktitle-p">'+status+'</div>');
-							}
-							if (position[i].status == "some"){
-								var status = "30~100";
-								$(".maskco").append('<div class="masktitle-s">'+status+'</div>');
-							}
-							if (position[i].status == "few"){
-								var status = "1~30";
-								$(".maskco").append('<div class="masktitle-f">'+status+'</div>');
-							}
-							if (position[i].status == "empty"){
-								var status = "품절";
-								$(".maskco").append('<div class="masktitle-soldout">'+status+'</div>');
-							}
-							if (position[i].status == "break"){
-								var status = "품절";
-								$(".maskco").append('<div class="masktitle-soldout">'+status+'</div>');
-							}
-							$(".maskco").append('<div class=masktext>입고일자 : ' + position[i].created_at + '</div>');
-							$(".maskco").append('<div class=masktext>업데이트 : ' + position[i].stock + '</div>');
-							$('.maskbt').one("click",function(){
-								var name = position[i].text
-								var lat = position[i].latlng.getLat()
-								var lng = position[i].latlng.getLng()
-								window.open("https://map.kakao.com/link/map/" + name + "," + lat + "," + lng)
-							})
-						});
-					}
-					$( '#all').empty();
-					window.html = '';
-					for(const i in position) {
-						if (position[i].status == "plenty"){
-							var lat = position[i].latlng.getLat()
-							var lng = position[i].latlng.getLng()
-							var name = position[i].text
-							var address = position[i].addr.split('(');
-							var stock = position[i].stock
-							$("#all").append('<div id="mcard"><h1 id="mname" style="font-family: \'Do Hyeon\', sans-serif;">' + name + '<h1 id="mstat-p">100+</h1>' +'</h1><p id="mtext">' + address[0] + '</p><p id="mtext">' + stock + '</p><div id="mbt" OnClick="window.open(\'https://map.kakao.com/link/map/' + name + "," + lat + "," + lng + '\')"><img src="https://arcspace.kr/project/maskfinder/mask/map.png" style="width:20px; height:20px; padding-top:2px; padding-left:22px;"/><p id="mbtp" style="font-family: \'Stylish\', sans-serif;">지도에서 보기</p></div><br/>');
-						}
-					}
-					for(const i in position) {
-						if (position[i].status == "some"){
-							var lat = position[i].latlng.getLat()
-							var lng = position[i].latlng.getLng()
-							var name = position[i].text
-							var address = position[i].addr.split('(');
-							var stock = position[i].stock
-							$("#all").append('<div id="mcard"><h1 id="mname" style="font-family: \'Do Hyeon\', sans-serif;">' + name + '<h1 id="mstat-s">30~100</h1>' +'</h1><p id="mtext">' + address[0] + '</p><p id="mtext">' + stock + '</p><div id="mbt" OnClick="window.open(\'https://map.kakao.com/link/map/' + name + "," + lat + "," + lng + '\')"><img src="https://arcspace.kr/project/maskfinder/mask/map.png" style="width:20px; height:20px; padding-top:2px; padding-left:22px;"/><p id="mbtp" style="font-family: \'Stylish\', sans-serif;">지도에서 보기</p></div><br/>');
-									
-						}
-					}
-					for(const i in position) {
-						if (position[i].status == "few"){
-							var lat = position[i].latlng.getLat()
-							var lng = position[i].latlng.getLng()
-							var name = position[i].text
-							var address = position[i].addr.split('(');
-							var stock = position[i].stock
-							$("#all").append('<div id="mcard"><h1 id="mname" style="font-family: \'Do Hyeon\', sans-serif;">' + name + '<h1 id="mstat-f">1~30</h1>' +'</h1><p id="mtext">' + address[0] + '</p><p id="mtext">' + stock + '</p><div id="mbt" OnClick="window.open(\'https://map.kakao.com/link/map/' + name + "," + lat + "," + lng + '\')"><img src="https://arcspace.kr/project/maskfinder/mask/map.png" style="width:20px; height:20px; padding-top:2px; padding-left:22px;"/><p id="mbtp" style="font-family: \'Stylish\', sans-serif;">지도에서 보기</p></div><br/>');
-						}
-					}
-					if (a==0){
-						$("#all").append('<p id="mno">주변에 마스크 보유 판매처가 없습니다.</p>');
-					}
-								
-								//console.log(msg.stores);
-								//console.log(msg.stores[0].addr);
-								//console.log(msg.stores[0].remain_stat);
-								//console.log(msg.stores[0].lat);
-								//console.log(msg.stores[0].lng);
-				});
-            });
-        } else {
-            alert("이 브라우저에서는 Geolocation이 지원되지 않습니다.")
-        }
-    });
-</script>
-<script>
-    var mapContainer = document.getElementById('map'), // 지도를 표시할 div
-        mapOption = {
-            center: new daum.maps.LatLng(37.537187, 127.005476), // 지도의 중심좌표
-            level: 5 // 지도의 확대 레벨
-        };
 
-    //지도를 미리 생성
-    var map = new daum.maps.Map(mapContainer, mapOption);
-    //주소-좌표 변환 객체를 생성
-    var geocoder = new daum.maps.services.Geocoder();
-    //마커를 미리 생성
-    var marker = new daum.maps.Marker({
-        position: new daum.maps.LatLng(37.537187, 127.005476),
-        map: map
-    });
-
-
-    function sample5_execDaumPostcode() {
-        new daum.Postcode({
-            oncomplete: function(data) {
-                var addr = data.address; // 최종 주소 변수
-
-                // 주소 정보를 해당 필드에 넣는다.
-                document.getElementById("sample5_address").value = addr;
-                // 주소로 상세 정보를 검색
-                geocoder.addressSearch(data.address, function(results, status) {
-                    // 정상적으로 검색이 완료됐으면
-                    if (status === daum.maps.services.Status.OK) {
-
-                        var result = results[0]; //첫번째 결과의 값을 활용
-
-                        // 해당 주소에 대한 좌표를 받아서
-                        var coords = new daum.maps.LatLng(result.y, result.x);
-                        // 지도를 보여준다.
-                        mapContainer.style.display = "block";
-                        map.relayout();
-                        // 지도 중심을 변경한다.
-                        map.setCenter(coords);
-                        // 마커를 결과값으로 받은 위치로 옮긴다.
-                        marker.setPosition(coords)
-						$.ajax({
-							method: "GET",
-							url: "https://8oi9s0nnth.apigw.ntruss.com/corona19-masks/v1/storesByGeo/json",
-							data: {lng: result.x, lat: result.y, m: 5000},
-						})
-							.done(function (msg) {
-								var position = [];
-								var a=0;
-								for(var j in msg.stores){
-									var push = position.push({latlng: new kakao.maps.LatLng(msg.stores[j].lat, msg.stores[j].lng), status: msg.stores[j].remain_stat, text: msg.stores[j].name, addr : msg.stores[j].addr, stock : msg.stores[j].created_at, created_at : msg.stores[j].stock_at});
-								}
-								for(const i in position) {
-									if (position[i].status == "plenty"){
-										var imageSrc = "https://arcspace.kr/project/maskfinder/mask/100p.png"; 
-										a=a+1;
-									}
-									if (position[i].status == "some"){
-										var imageSrc = "https://arcspace.kr/project/maskfinder/mask/30p.png";
-										a=a+1;
-									}
-									if (position[i].status == "few"){
-										var imageSrc = "https://arcspace.kr/project/maskfinder/mask/2p.png"; 
-										a=a+1;
-									}
-									if (position[i].status == "empty"){
-										var imageSrc = "https://arcspace.kr/project/maskfinder/mask/p.png"; 
-									}
-									if (position[i].status == "break"){
-										var imageSrc = "https://arcspace.kr/project/maskfinder/mask/p.png"; 
-									}
-									var imageSize = new kakao.maps.Size(24, 35); 
-									var markerImage = new kakao.maps.MarkerImage(imageSrc, imageSize);
-									const marker = new kakao.maps.Marker({
-										map: map, // 마커를 표시할 지도
-										position: position[i].latlng, // 마커를 표시할 위치
-										title : position[i].text, // 마커의 타이틀, 마커에 마우스를 올리면 타이틀이 표시됩니다
-										image : markerImage, // 마커 이미지
-										text: position[i].text
-									});
-									kakao.maps.event.addListener(marker, 'click', function() {
-										$('.maskname').empty();
-										$('.maskco').empty();
-										$('#mmodal').show();
-										$(".maskname").append(position[i].text);
-										if (position[i].status == "plenty"){
-											var status = "100+";
-											$(".maskco").append('<div class="masktitle-p">'+status+'</div>');
-										}
-										if (position[i].status == "some"){
-											var status = "30~100";
-											$(".maskco").append('<div class="masktitle-s">'+status+'</div>');
-										}
-										if (position[i].status == "few"){
-											var status = "1~30";
-											$(".maskco").append('<div class="masktitle-f">'+status+'</div>');
-										}
-										if (position[i].status == "empty"){
-											var status = "품절";
-											$(".maskco").append('<div class="masktitle-soldout">'+status+'</div>');
-										}
-										if (position[i].status == "break"){
-											var status = "품절";
-											$(".maskco").append('<div class="masktitle-soldout">'+status+'</div>');
-										}
-										$(".maskco").append('<div class=masktext>입고일자 : ' + position[i].created_at + '</div>');
-										$(".maskco").append('<div class=masktext>업데이트 : ' + position[i].stock + '</div>');
-										$('.maskbt').one("click",function(){
-											var name = position[i].text
-											var lat = position[i].latlng.getLat()
-											var lng = position[i].latlng.getLng()
-											window.open("https://map.kakao.com/link/map/" + name + "," + lat + "," + lng)
-										})
-									});
-								}
-								$( '#all').empty();
-								for(const i in position) {
-									if (position[i].status == "plenty"){
-										var lat = position[i].latlng.getLat()
-										var lng = position[i].latlng.getLng()
-										var name = position[i].text
-										var address = position[i].addr.split('(');
-										var stock = position[i].stock
-										$("#all").append('<div id="mcard"><h1 id="mname" style="font-family: \'Do Hyeon\', sans-serif;">' + name + '<h1 id="mstat-p">100+</h1>' +'</h1><p id="mtext">' + address[0] + '</p><p id="mtext">' + stock + '</p><div id="mbt" OnClick="window.open(\'https://map.kakao.com/link/map/' + name + "," + lat + "," + lng + '\')"><img src="https://arcspace.kr/project/maskfinder/mask/map.png" style="width:20px; height:20px; padding-top:2px; padding-left:22px;"/><p id="mbtp" style="font-family: \'Stylish\', sans-serif;">지도에서 보기</p></div><br/>');
-									}
-								}
-								for(const i in position) {
-									if (position[i].status == "some"){
-										var lat = position[i].latlng.getLat()
-										var lng = position[i].latlng.getLng()
-										var name = position[i].text
-										var address = position[i].addr.split('(');
-										var stock = position[i].stock
-										$("#all").append('<div id="mcard"><h1 id="mname" style="font-family: \'Do Hyeon\', sans-serif;">' + name + '<h1 id="mstat-s">30~100</h1>' +'</h1><p id="mtext">' + address[0] + '</p><p id="mtext">' + stock + '</p><div id="mbt" OnClick="window.open(\'https://map.kakao.com/link/map/' + name + "," + lat + "," + lng + '\')"><img src="https://arcspace.kr/project/maskfinder/mask/map.png" style="width:20px; height:20px; padding-top:2px; padding-left:22px;"/><p id="mbtp" style="font-family: \'Stylish\', sans-serif;">지도에서 보기</p></div><br/>');
-												
-									}
-								}
-								for(const i in position) {
-									if (position[i].status == "few"){
-										var lat = position[i].latlng.getLat()
-										var lng = position[i].latlng.getLng()
-										var name = position[i].text
-										var address = position[i].addr.split('(');
-										var stock = position[i].stock
-										$("#all").append('<div id="mcard"><h1 id="mname" style="font-family: \'Do Hyeon\', sans-serif;">' + name + '<h1 id="mstat-f">1~30</h1>' +'</h1><p id="mtext">' + address[0] + '</p><p id="mtext">' + stock + '</p><div id="mbt" OnClick="window.open(\'https://map.kakao.com/link/map/' + name + "," + lat + "," + lng + '\')"><img src="https://arcspace.kr/project/maskfinder/mask/map.png" style="width:20px; height:20px; padding-top:2px; padding-left:22px;"/><p id="mbtp" style="font-family: \'Stylish\', sans-serif;">지도에서 보기</p></div><br/>');
-									}
-								}
-								if(a==0){
-									$("#all").append('<p id="mno">주변에 마스크 보유 판매처가 없습니다.</p>');
-								}
-								
-
-								
-								//console.log(msg.stores);
-								//console.log(msg.stores[0].addr);
-								//console.log(msg.stores[0].remain_stat);
-								//console.log(msg.stores[0].lat);
-								//console.log(msg.stores[0].lng);
-							});
-                    }
-                });
-            }
-        }).open();
-    }
-</script>
-
-<script>
-kakao.maps.event.addListener(map, 'center_changed', _.debounce(function() {
-	try {
-		for(var i = 0; i < markers.length; i++){
-			markers[i].setMap(null);
-			console.log(markers[i])
-		}
-	}catch(e)
-	{
-		
-	}
-	var markers = [];
-	var result = map.getCenter(); //첫번째 결과의 값을 활용
-
-	// 해당 주소에 대한 좌표를 받아서
-	var coords = new daum.maps.LatLng(result.getLat(), result.getLng());
-	// 지도를 보여준다.
-	mapContainer.style.display = "block";
-	map.relayout();
-	// 지도 중심을 변경한다.
-	map.setCenter(coords);
-	// 마커를 결과값으로 받은 위치로 옮긴다.
-	marker.setPosition(coords)
-	$.ajax({
-		method: "GET",
-		url: "https://8oi9s0nnth.apigw.ntruss.com/corona19-masks/v1/storesByGeo/json",
-		data: {lng: result.getLng(), lat: result.getLat(), m: 5000},
-	})
-		.done(function (msg) {
-			var position = [];
-			var a=0;
-			for(var j in msg.stores){
-				var push = position.push({latlng: new kakao.maps.LatLng(msg.stores[j].lat, msg.stores[j].lng), status: msg.stores[j].remain_stat, text: msg.stores[j].name, addr : msg.stores[j].addr, stock : msg.stores[j].created_at, created_at : msg.stores[j].stock_at});
-			}
-			for(const i in position) {
-				if (position[i].status == "plenty"){
-					var imageSrc = "https://arcspace.kr/project/maskfinder/mask/100p.png"; 
-					a=a+1;
-				}
-				if (position[i].status == "some"){
-					var imageSrc = "https://arcspace.kr/project/maskfinder/mask/30p.png";
-					a=a+1;
-				}
-				if (position[i].status == "few"){
-					var imageSrc = "https://arcspace.kr/project/maskfinder/mask/2p.png"; 
-					a=a+1;
-				}
-				if (position[i].status == "empty"){
-					var imageSrc = "https://arcspace.kr/project/maskfinder/mask/p.png"; 
-				}
-				if (position[i].status == "break"){
-					var imageSrc = "https://arcspace.kr/project/maskfinder/mask/p.png"; 
-				}
-				var imageSize = new kakao.maps.Size(24, 35); 
-				var markerImage = new kakao.maps.MarkerImage(imageSrc, imageSize);
-				var marker = new kakao.maps.Marker({
-					map: map, // 마커를 표시할 지도
-					position: position[i].latlng, // 마커를 표시할 위치
-					title : position[i].text, // 마커의 타이틀, 마커에 마우스를 올리면 타이틀이 표시됩니다
-					image : markerImage, // 마커 이미지
-					text: position[i].text
-				});
-				markers.push(marker);
-				kakao.maps.event.addListener(marker, 'click', function() {
-					$('.maskname').empty();
-					$('.maskco').empty();
-					$('#mmodal').show();
-					$(".maskname").append(position[i].text);
-					if (position[i].status == "plenty"){
-						var status = "100+";
-						$(".maskco").append('<div class="masktitle-p">'+status+'</div>');
-					}
-					if (position[i].status == "some"){
-						var status = "30~100";
-						$(".maskco").append('<div class="masktitle-s">'+status+'</div>');
-					}
-					if (position[i].status == "few"){
-						var status = "1~30";
-						$(".maskco").append('<div class="masktitle-f">'+status+'</div>');
-					}
-					if (position[i].status == "empty"){
-						var status = "품절";
-						$(".maskco").append('<div class="masktitle-soldout">'+status+'</div>');
-					}
-					if (position[i].status == "break"){
-						var status = "품절";
-						$(".maskco").append('<div class="masktitle-soldout">'+status+'</div>');
-					}
-					$(".maskco").append('<div class=masktext>입고일자 : ' + position[i].created_at + '</div>');
-					$(".maskco").append('<div class=masktext>업데이트 : ' + position[i].stock + '</div>');
-					$('.maskbt').one("click",function(){
-						var name = position[i].text
-						var lat = position[i].latlng.getLat()
-						var lng = position[i].latlng.getLng()
-						window.open("https://map.kakao.com/link/map/" + name + "," + lat + "," + lng)
-					})
-				});
-			}
-			$( '#all').empty();
-			for(const i in position) {
-				if (position[i].status == "plenty"){
-					var lat = position[i].latlng.getLat()
-					var lng = position[i].latlng.getLng()
-					var name = position[i].text
-					var address = position[i].addr.split('(');
-					var stock = position[i].stock
-					$("#all").append('<div id="mcard"><h1 id="mname" style="font-family: \'Do Hyeon\', sans-serif;">' + name + '<h1 id="mstat-p">100+</h1>' +'</h1><p id="mtext">' + address[0] + '</p><p id="mtext">' + stock + '</p><div id="mbt" OnClick="window.open(\'https://map.kakao.com/link/map/' + name + "," + lat + "," + lng + '\')"><img src="https://arcspace.kr/project/maskfinder/mask/map.png" style="width:20px; height:20px; padding-top:2px; padding-left:22px;"/><p id="mbtp" style="font-family: \'Stylish\', sans-serif;">지도에서 보기</p></div><br/>');
-				}
-			}
-			for(const i in position) {
-				if (position[i].status == "some"){
-					var lat = position[i].latlng.getLat()
-					var lng = position[i].latlng.getLng()
-					var name = position[i].text
-					var address = position[i].addr.split('(');
-					var stock = position[i].stock
-					$("#all").append('<div id="mcard"><h1 id="mname" style="font-family: \'Do Hyeon\', sans-serif;">' + name + '<h1 id="mstat-s">30~100</h1>' +'</h1><p id="mtext">' + address[0] + '</p><p id="mtext">' + stock + '</p><div id="mbt" OnClick="window.open(\'https://map.kakao.com/link/map/' + name + "," + lat + "," + lng + '\')"><img src="https://arcspace.kr/project/maskfinder/mask/map.png" style="width:20px; height:20px; padding-top:2px; padding-left:22px;"/><p id="mbtp" style="font-family: \'Stylish\', sans-serif;">지도에서 보기</p></div><br/>');
-							
-				}
-			}
-			for(const i in position) {
-				if (position[i].status == "few"){
-					var lat = position[i].latlng.getLat()
-					var lng = position[i].latlng.getLng()
-					var name = position[i].text
-					var address = position[i].addr.split('(');
-					var stock = position[i].stock
-					$("#all").append('<div id="mcard"><h1 id="mname" style="font-family: \'Do Hyeon\', sans-serif;">' + name + '<h1 id="mstat-f">1~30</h1>' +'</h1><p id="mtext">' + address[0] + '</p><p id="mtext">' + stock + '</p><div id="mbt" OnClick="window.open(\'https://map.kakao.com/link/map/' + name + "," + lat + "," + lng + '\')"><img src="https://arcspace.kr/project/maskfinder/mask/map.png" style="width:20px; height:20px; padding-top:2px; padding-left:22px;"/><p id="mbtp" style="font-family: \'Stylish\', sans-serif;">지도에서 보기</p></div><br/>');
-				}
-			}
-			if(a==0){
-				$("#all").append('<p id="mno">주변에 마스크 보유 판매처가 없습니다.</p>');
-			}
-			console.log(markers);
-		})
-}),100);
-</script>
+	</div>
 </div>
-</div>
-<button><span class="sidebar-btn"><</span></button>
+<button><span class="sidebar-btn"></span></button>
 </aside>
-</center>
+</center>|
 </body>
 </html>

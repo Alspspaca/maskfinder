@@ -362,6 +362,9 @@ input[type="text"]:disabled {
 	background: white;
 	z-index: 5;
 }
+#sample5_address{
+	cursor: pointer;
+}
 .input_text {
 	width: 348px; height: 21px;
 	margin: 6px 0 0 9px;
@@ -442,7 +445,8 @@ button .sidebar-btn {
     text-align: center;
     margin: 0;
     padding: 0;
-    border: none;
+	border: none;
+	cursor: pointer;
 }
 @media screen and (max-width: 768px) {
 	button {
@@ -467,20 +471,6 @@ button .sidebar-btn {
 		right: 90px;
 		height: 100%;
 		color: #fff;
-	}
-	.sidebar button {
-		background-color: black;
-		display: block;
-		position: absolute;
-		top: 45%;
-		right: 300px;
-		width: 30px;
-		height: 38px;
-		line-height: 38px;
-		text-align: center;
-		margin: 0;
-		padding: 0;
-		border: none;
 	}
 }
 /*********************************************************************************/
