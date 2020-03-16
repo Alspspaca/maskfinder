@@ -131,35 +131,6 @@ kakao.maps.event.addListener(map, 'zoom_changed', function() {
     var level = map.getLevel();
     if(level >6)console.log("좀 더 가까이 해주세요.");
 });
-function sample5_execkakaoPostcode() {
-new kakao.Postcode({
-    oncomplete: function(data) {
-        var addr = data.address; // 최종 주소 변수
-
-        // 주소 정보를 해당 필드에 넣는다.
-        document.getElementById("sample5_address").value = addr;
-        // 주소로 상세 정보를 검색
-        geocoder.addressSearch(data.address, function(results, status) {
-            // 정상적으로 검색이 완료됐으면
-            if (status === kakao.maps.services.Status.OK) {
-
-                var result = results[0]; //첫번째 결과의 값을 활용
-
-                // 해당 주소에 대한 좌표를 받아서
-                var coords = new kakao.maps.LatLng(result.y, result.x);
-                // 지도를 보여준다.
-                mapContainer.style.display = "block";
-                map.relayout();
-                // 지도 중심을 변경한다.
-                map.setCenter(coords);
-                // 마커를 결과값으로 받은 위치로 옮긴다.
-                marker.setPosition(coords)
-                load(result.x,result.y);
-            }
-        });
-    }
-}).open();
-}
 kakao.maps.event.addListener(map, 'center_changed', _.debounce(function() {
     if(map.getLevel() > 6){clusterer.clear();$('#all').empty(); $("#all").append('<p id="mno">지도를 확대해주세요.</p>'); return;}
 	var result = map.getCenter(); //첫번째 결과의 값을 활용
@@ -174,3 +145,32 @@ kakao.maps.event.addListener(map, 'center_changed', _.debounce(function() {
 function gomap(n,lat,lng){
     window.open("https://map.kakao.com/link/map/" + n + "," + lat + "," + lng);
 }
+function sample5_execDaumPostcode() {
+    new daum.Postcode({
+        oncomplete: function(data) {
+            var addr = data.address; // 최종 주소 변수
+    
+            // 주소 정보를 해당 필드에 넣는다.
+            document.getElementById("sample5_address").value = addr;
+            // 주소로 상세 정보를 검색
+            geocoder.addressSearch(data.address, function(results, status) {
+                // 정상적으로 검색이 완료됐으면
+                if (status === kakao.maps.services.Status.OK) {
+    
+                    var result = results[0]; //첫번째 결과의 값을 활용
+    
+                    // 해당 주소에 대한 좌표를 받아서
+                    var coords = new kakao.maps.LatLng(result.y, result.x);
+                    // 지도를 보여준다.
+                    mapContainer.style.display = "block";
+                    map.relayout();
+                    // 지도 중심을 변경한다.
+                    map.setCenter(coords);
+                    // 마커를 결과값으로 받은 위치로 옮긴다.
+                    marker.setPosition(coords)
+                    load(result.x,result.y);
+                }
+            });
+        }
+    }).open();
+    }
